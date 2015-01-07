@@ -10,15 +10,14 @@ This is plugin for WordPress Color Picker Alpha Channel
 You know it, download/upload/active plugin on your wordpress
 
 ## Usage
-`<input type="text" class="cs-wp-color-picker">`
 
-`<input type="text" class="cs-wp-color-picker" value="#ffbc00">`
-
-`<input type="text" class="cs-wp-color-picker" value="rgba(255,0,0,0.25)">`
-
-`<input type="text" class="cs-wp-color-picker" value="#ffbc00" data-rgba="false">`
-
-`<input type="text" class="cs-wp-color-picker" data-default-color="#ffbc00" value="#ffbc00">`
+```
+<input type="text" class="cs-wp-color-picker">
+<input type="text" class="cs-wp-color-picker" value="#ffbc00">
+<input type="text" class="cs-wp-color-picker" value="rgba(255,0,0,0.25)">
+<input type="text" class="cs-wp-color-picker" value="#ffbc00" data-rgba="false">
+<input type="text" class="cs-wp-color-picker" data-default-color="#ffbc00" value="#ffbc00">
+```
 
 ## Donate to the Development
 You Guys! If you want to see more functions and features for this framework, you can buy me a coffee. I need a lot of it when I am creating new stuff for you. Thank you in advance.
