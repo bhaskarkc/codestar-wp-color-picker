@@ -32,6 +32,16 @@
 
   }
 
+  $.cs_ParseColorValue = function( val ) {
+
+    var value = val.replace(/\s+/g, ''),
+        alpha = ( value.indexOf('rgba') !== -1 ) ? parseFloat( value.replace(/^.*,(.+)\)/, '$1') * 100 ) : 100,
+        rgba  = ( alpha < 100 ) ? true : false;
+
+    return { value: value, alpha: alpha, rgba: rgba };
+
+  };
+
   $.fn.cs_wpColorPicker = function() {
 
     return this.each(function() {
@@ -41,9 +51,8 @@
       // check for rgba enabled/disable
       if( $this.data('rgba') !== false ) {
 
-        // set color and alpha value
-        var color_value = $this.val().replace(/\s+/g, ''),
-            alpha_value = ( color_value.indexOf('rgba') !== -1 ) ? parseFloat( color_value.replace(/^.*,(.+)\)/, '$1') * 100 ) : 100;
+        // parse value
+        var picker = $.cs_ParseColorValue( $this.val() );
 
         // wpColorPicker core
         $this.wpColorPicker({
@@ -93,19 +102,32 @@
               // slider: create
               create: function() {
 
-                var slide_value = parseFloat( alpha_value / 100 ),
+                var slide_value = parseFloat( picker.alpha / 100 ),
                     alpha_text_value = slide_value < 1 ? slide_value : '';
 
                 // update alpha text && checkerboard background color
                 $alpha_text.text(alpha_text_value);
-                $alpha_offset.css('background-color', color_value);
+                $alpha_offset.css('background-color', picker.value);
 
-                // wpColorPicker clear and default button for update iris data alpha && alpha text && slider color option
-                $container.on('click', '.wp-picker-default, .wp-picker-clear', function() {
+                // wpColorPicker clear button for update iris data alpha && alpha text && slider color option
+                $container.on('click', '.wp-picker-clear', function() {
 
-                  a8cIris._color._alpha = slide_value;
-                  $alpha_text.text(alpha_text_value);
-                  $alpha_slider.slider('option', 'value', alpha_value).trigger('slide');
+                  a8cIris._color._alpha = 1;
+                  $alpha_text.text('');
+                  $alpha_slider.slider('option', 'value', 100).trigger('slide');
+
+                });
+
+                // wpColorPicker default button for update iris data alpha && alpha text && slider color option
+                $container.on('click', '.wp-picker-default', function() {
+
+                  var default_picker = $.cs_ParseColorValue( $this.data('default-color') ),
+                      default_value  = parseFloat( default_picker.alpha / 100 ),
+                      default_text   = default_value < 1 ? default_value : '';
+
+                  a8cIris._color._alpha = default_value;
+                  $alpha_text.text(default_text);
+                  $alpha_slider.slider('option', 'value', default_picker.alpha).trigger('slide');
 
                 });
 
@@ -122,16 +144,14 @@
               },
 
               // slider: options
-              value: alpha_value,
+              value: picker.alpha,
               step: 1,
               min: 1,
               max: 100
 
             });
-          },
+          }
 
-          // wpColorPicker: default color value
-          defaultColor: color_value
         });
 
       } else {
@@ -140,8 +160,7 @@
         $this.wpColorPicker({
           change: function() {
             $this.trigger('keyup');
-          },
-          defaultColor: $this.val()
+          }
         });
 
       }
