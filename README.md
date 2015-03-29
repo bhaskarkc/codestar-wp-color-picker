@@ -32,6 +32,8 @@ Read more about GNU [license.txt](http://www.gnu.org/licenses/gpl-2.0.txt)
 If you would like to contribute please fork the project and <a href="https://github.com/Codestar/codestar-wp-color-picker/issues">report bugs</a> or submit <a href="https://github.com/Codestar/codestar-wp-color-picker/pulls">pull requests</a>.
 
 ## Changelog
+#### v1.1.0
+- Improved WP Customize panel save trigger
 #### v1.0.0
 - Initial Release
 

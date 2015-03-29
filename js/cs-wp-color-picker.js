@@ -1,7 +1,12 @@
-// the semi-colon before the function invocation is a safety
-// net against concatenated scripts and/or other plugins
-// that are not closed properly.
-// set root Object
+/**
+ *
+ * Codestar WP Color Picker v1.1.0
+ * This is plugin for WordPress Color Picker Alpha Channel 
+ *
+ * Copyright 2015 Codestar <info@codestarlive.com>
+ * GNU GENERAL PUBLIC LICENSE (http://www.gnu.org/licenses/gpl-2.0.txt)
+ *
+ */
 ;(function ( $, window, document, undefined ) {
   'use strict';
 
@@ -57,17 +62,23 @@
         // wpColorPicker core
         $this.wpColorPicker({
 
+          // wpColorPicker: clear
+          clear: function() {
+            $this.trigger('keyup');
+          },
+
           // wpColorPicker: change
           change: function( event, ui ) {
 
-            // update checkerboard background color
-            $this.closest('.wp-picker-container').find('.cs-alpha-slider-offset').css('background-color', ui.color.toString());
-            $this.trigger('keyup');
+            var ui_color_value = ui.color.toString();
+
+            $this.closest('.wp-picker-container').find('.cs-alpha-slider-offset').css('background-color', ui_color_value);
+            $this.val(ui_color_value).trigger('change');
 
           },
 
           // wpColorPicker: create
-          create: function( event, ui ) {
+          create: function() {
 
             // set variables for alpha slider
             var a8cIris       = $this.data('a8cIris'),
@@ -109,7 +120,7 @@
                 $alpha_text.text(alpha_text_value);
                 $alpha_offset.css('background-color', picker.value);
 
-                // wpColorPicker clear button for update iris data alpha && alpha text && slider color option
+                // wpColorPicker clear for update iris data alpha && alpha text && slider color option
                 $container.on('click', '.wp-picker-clear', function() {
 
                   a8cIris._color._alpha = 1;
@@ -158,8 +169,11 @@
 
         // wpColorPicker default picker
         $this.wpColorPicker({
-          change: function() {
+          clear: function() {
             $this.trigger('keyup');
+          },
+          change: function( event, ui ) {
+            $this.val(ui.color.toString()).trigger('change');
           }
         });
 
