@@ -34,6 +34,7 @@ If you would like to contribute please fork the project and <a href="https://git
 ## Changelog
 #### v1.1.0
 - Improved WP Customize panel save trigger
+
 #### v1.0.0
 - Initial Release
 
